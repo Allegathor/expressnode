@@ -8,7 +8,7 @@ const LOGIN_RULE_SET = {
 const PASSWD_RULE_SET = {
   minLen: 8,
   regexGroup: {
-    only: { regex: /^[\da-zA-Z@!_\-]+$/, desc: 'only latin, digits and the following special characters: @!#$%^&*()<>_-' },
+    only: { regex: /^[\da-zA-Z@!_\-]+$/, desc: 'only latin, digits and the following special characters: @!_-' },
     atLeast: {
       lowerLatin: { regex: /[a-z]+/, desc: 'at least one latin character in lower case' },
       upperLatin: { regex: /[A-Z]+/, desc: 'at least one latin character in upper case' },
