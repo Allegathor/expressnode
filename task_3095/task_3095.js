@@ -1,23 +1,28 @@
 import express from 'express';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
 
-import {logLineSync} from '../utils/logging.js'
-import {escapeHTML} from '../utils/html.js';
-import {loginValidator, passwdValidator} from '../validators/common.js';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+import { logLineSync } from '../utils/logging.js'
+import { escapeHTML } from '../utils/html.js';
+import { loginValidator, passwdValidator } from '../validators/common.js';
 
 const webserver = express();
 const port = 3095;
 const logFN = path.join(__dirname, '_server.log');
 
 webserver.get('/form', (req, res) => {
-  logLineSync(logFN,`[${port}] /form called, get pars: ${JSON.stringify(req.query)}`);
+  logLineSync(logFN, `[${port}] /form called, get pars: ${JSON.stringify(req.query)}`);
 
-  const login = escapeHTML(req.query.login); 
-  const passwd = escapeHTML(req.query.passwd); 
+  const login = escapeHTML(req.query.login);
+  const passwd = escapeHTML(req.query.passwd);
 
-  if(login || passwd) {
+  if (login || passwd) {
     const errors = [...loginValidator(login), ...passwdValidator(passwd)];
-    if(errors.length)
+    if (errors.length)
       res.send(createHTMLForm(login, passwd, errors.join('\n')));
     else
       res.send(createHTMLSuccessGreeting(login));
